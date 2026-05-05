@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///C:/Users/Steve/Downloads/driver_shift_report.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Driver Shift Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
+
+  :root {
+    --black: #111111;
+    --dark: #1a1a1a;
+    --panel: #222222;
+    --border: #333333;
+    --accent: #2196F3;
+    --accent-dark: #1565C0;
+    --accent-dim: #0d2a4a;
+    --text: #e8e8e8;
+    --muted: #888888;
+    --green: #4caf50;
+    --amber: #E8A020;
+    --red: #e53935;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  header {
+    background: var(--dark);
+    border-bottom: 3px solid var(--accent);
+    padding: 16px 20px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  header p {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .container { max-width: 680px; margin: 0 auto; padding: 20px 16px; }
+
+  .section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-header .tag {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .section-header h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .section-body { padding: 16px; }
+
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  label span.req { color: var(--accent); margin-left: 2px; }
+
+  input, select, textarea {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    padding: 10px 12px;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  /* Load cards */
+  .load-card {
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .load-card.optional { border-style: dashed; }
+
+  .load-card-header {
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .load-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .load-optional-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 7px;
+  }
+
+  .load-card-body { padding: 14px; }
+
+  /* Wait time toggle */
+  .wait-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+
+  .wait-toggle-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .wait-toggle-sub {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .toggle input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--border);
+    border-radius: 24px;
+    transition: 0.2s;
+  }
+
+  .toggle-slider:before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+    background: var(--muted);
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+
+  .toggle input:checked + .toggle-slider { background: var(--amber); }
+  .toggle input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+    background: var(--black);
+  }
+
+  .wait-fields {
+    display: none;
+    background: #2a2010;
+    border: 1px solid var(--amber);
+    border-radius: 5px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+
+  .wait-fields.show { display: block; }
+
+  .wait-fields label { color: var(--amber); }
+
+  /* Time summary boxes */
+  .time-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .time-box {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .time-box .tb-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .time-box .tb-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  /* Shift summary */
+  .shift-summary {
+    background: var(--black);
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .shift-summary .ss-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .shift-summary .ss-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  /* Optional load toggle */
+  .add-load-btn {
+    width: 100%;
+    background: none;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .add-load-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Submit */
+  .submit-btn {
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 8px;
+  }
+
+  .submit-btn:hover { background: var(--accent-dark); }
+  .submit-btn:active { transform: scale(0.99); }
+
+  /* Success */
+  .success-screen { display: none; text-align: center; padding: 60px 20px; }
+  .success-screen.show { display: block; }
+  .success-screen .tick { font-size: 64px; margin-bottom: 20px; }
+  .success-screen h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .success-screen p { color: var(--muted); margin-bottom: 24px; }
+  .new-btn {
+    background: none;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    color: var(--accent);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .new-btn:hover { background: var(--accent); color: #fff; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    overflow-y: auto;
+    padding: 20px 16px;
+  }
+  .modal-overlay.show { display: block; }
+  .modal {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    max-width: 640px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .modal-header {
+    background: var(--black);
+    border-bottom: 2px solid var(--accent);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .modal-close {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-body { padding: 20px 18px; font-size: 14px; line-height: 1.7; }
+  .preview-row {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-row:last-child { border-bottom: none; }
+  .preview-key {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 130px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .preview-val { color: var(--text); }
+  .modal-footer {
+    padding: 14px 18px;
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+  }
+
+  input.invalid, select.invalid { border-color: var(--red) !important; }
+
+  /* Pre-start checklist */
+  .check-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 14px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+
+  .check-item:last-child { margin-bottom: 0; }
+
+  .check-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .yes-no {
+    display: flex;
+    gap: 8px;
+  }
+
+  .yn-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 14px;
+    cursor: pointer;
+    background: var(--dark);
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+
+  .yn-btn.yes.active { background: #1a3a1a; border-color: var(--green); color: var(--green); }
+  .yn-btn.no.active  { background: #3a1a1a; border-color: var(--red); color: var(--red); }
+
+  @media (max-width: 420px) {
+    .row-2 { grid-template-columns: 1fr; }
+    .row-3 { grid-template-columns: 1fr 1fr; }
+    .time-summary { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Driver Shift Report</h1>
+  <p>Daily Shift &amp; Load Summary</p>
+</header>
+
+<div class="container" id="formContainer">
+
+  <!-- 00 Pre-Start Check -->
+  <div class="section">
+    <div class="section-header">
+      <span class="tag">01</span>
+      <h2>Pre-Start Check</h2>
+    </div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Complete before start up. Tap Yes or No that items were checked.</p>
+
+      <div class="check-item">
+        <span class="check-label">🛢️ Engine Oil</span>
+        <div class="yes-no">
+          <button class="yn-btn yes" onclick="setCheck(this,&#39;oil&#39;,&#39;yes&#39;)">Yes</button>
+          <button class="yn-btn no" onclick="setCheck(this,&#39;oil&#39;,&#39;no&#39;)">No</button>
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-label">🌡️ Coolant</span>
+        <div class="yes-no">
+          <button class="yn-btn yes" onclick="setCheck(this,&#39;coolant&#39;,&#39;yes&#39;)">Yes</button>
+          <button class="yn-btn no" onclick="setCheck(this,&#39;coolant&#39;,&#39;no&#39;)">No</button>
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-label">💡 Lights</span>
+        <div class="yes-no">
+          <button class="yn-btn yes" onclick="setCheck(this,&#39;lights&#39;,&#39;yes&#39;)">Yes</button>
+          <button class="yn-btn no" onclick="setCheck(this,&#39;lights&#39;,&#39;no&#39;)">No</button>
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-label">🔵 Tyres</span>
+        <div class="yes-no">
+          <button class="yn-btn yes" onclick="setCheck(this,&#39;tyres&#39;,&#39;yes&#39;)">Yes</button>
+          <button class="yn-btn no" onclick="setCheck(this,&#39;tyres&#39;,&#39;no&#39;)">No</button>
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-label">🔗 Air Line Connections</span>
+        <div class="yes-no">
+          <button class="yn-btn yes" onclick="setCheck(this,&#39;airlines&#39;,&#39;yes&#39;)">Yes</button>
+          <button class="yn-btn no" onclick="setCheck(this,&#39;airlines&#39;,&#39;no&#39;)">No</button>
+        </div>
+      </div>
+      <div class="check-item">
+        <span class="check-label">🔄 Turntable Jaws</span>
+        <div class="yes-no">
+          <button class="yn-btn yes" onclick="setCheck(this,&#39;turntable&#39;,&#39;yes&#39;)">Yes</button>
+          <button class="yn-btn no" onclick="setCheck(this,&#39;turntable&#39;,&#39;no&#39;)">No</button>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:14px;">
+        <label>Pre-Start Notes / Issues</label>
+        <textarea id="preStartNotes" placeholder="Note any issues found during pre-start check..." style="min-height:60px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Shift Details -->
+  <div class="section">
+    <div class="section-header">
+      <span class="tag">02</span>
+      <h2>Shift Details</h2>
+    </div>
+    <div class="section-body">
+      <div class="row-2">
+        <div class="field">
+          <label>Date <span class="req">*</span></label>
+          <input type="date" id="shiftDate">
+        </div>
+        <div class="field">
+          <label>Driver <span class="req">*</span></label>
+          <select id="driverName">
+            <option value="">— Select —</option>
+          <option>Anthony</option>
+          <option>Beau</option>
+          <option>Craig</option>
+          <option>Gibbsy</option>
+          <option>H</option>
+          <option>Jack</option>
+          <option>Jake</option>
+          <option>Jock</option>
+          <option>Mark</option>
+          <option>Nic</option>
+          <option>Radar</option>
+          <option>Ryan</option>
+          <option>Shane</option>
+          <option>Shanon</option>
+          <option>Steve</option>
+          <option>Stewy</option>
+          <option>Taw</option>
+          <option>Tom</option>
+          <option>Travis</option>
+          <option>Trevor</option>
+          </select>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label>Shift Start <span class="req">*</span></label>
+          <input type="time" id="shiftStart" oninput="calcShift()">
+        </div>
+        <div class="field">
+          <label>Shift Finish <span class="req">*</span></label>
+          <input type="time" id="shiftFinish" oninput="calcShift()">
+        </div>
+      </div>
+      <div class="shift-summary">
+        <span class="ss-label">Total Shift Hours</span>
+        <span class="ss-val" id="shiftTotal">— hrs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Load 1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="tag">03</span>
+      <h2>Load 1</h2>
+    </div>
+    <div class="section-body">
+
+      <!-- Off-Kill Wait BEFORE Load 1 -->
+      <div class="wait-toggle" onclick="toggleWait(0)">
+        <div>
+          <div class="wait-toggle-label">⏳ Off-Kill Wait Before Load 1</div>
+          <div class="wait-toggle-sub">Waiting at plant for crates before first run</div>
+        </div>
+        <label class="toggle" onclick="event.stopPropagation()">
+          <input type="checkbox" id="wait0_toggle" onchange="toggleWait(0)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="wait-fields" id="wait0_fields">
+        <div class="row-2">
+          <div class="field">
+            <label>Wait Start (S)</label>
+            <input type="time" id="w0_start">
+          </div>
+          <div class="field">
+            <label>Wait Finish (F)</label>
+            <input type="time" id="w0_finish">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Farm <span class="req">*</span></label>
+        <select id="farm1">
+          <option value="">— Select farm —</option>
+          <option>Agright</option>
+          <option>Angry</option>
+          <option>Brialei</option>
+          <option>Channel</option>
+          <option>Fairview</option>
+          <option>Far</option>
+          <option>Foott South</option>
+          <option>Ford</option>
+          <option>GV1 Joyces Creek</option>
+          <option>GV2 Grandview</option>
+          <option>Gleeson</option>
+          <option>Hydor</option>
+          <option>Lakeside</option>
+          <option>Lesmis</option>
+          <option>Lynian</option>
+          <option>MacKenzie</option>
+          <option>Madick</option>
+          <option>Mannes</option>
+          <option>McDonald</option>
+          <option>Osborne 1</option>
+          <option>Osborne 2</option>
+          <option>Osborne 3</option>
+          <option>Pavilion 10</option>
+          <option>Pavilion 7</option>
+          <option>Pavilion 8</option>
+          <option>Pavilion 9</option>
+          <option>Pyramid</option>
+          <option>Riverside</option>
+          <option>Sanlea</option>
+          <option>Scott</option>
+          <option>Stockdale</option>
+          <option>T-Farm</option>
+          <option>Zanelli</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="row-3">
+        <div class="field">
+          <label>Arrival (A) <span class="req">*</span></label>
+          <input type="time" id="l1_arrive">
+        </div>
+        <div class="field">
+          <label>Start Loading (S) <span class="req">*</span></label>
+          <input type="time" id="l1_start">
+        </div>
+        <div class="field">
+          <label>Finish Loading (F) <span class="req">*</span></label>
+          <input type="time" id="l1_finish">
+        </div>
+      </div>
+
+      <!-- Off-Kill Wait -->
+      <div class="wait-toggle" onclick="toggleWait(1)">
+        <div>
+          <div class="wait-toggle-label">⏳ Off-Kill Wait</div>
+          <div class="wait-toggle-sub">After Load 1 — waiting at plant for empty crates</div>
+        </div>
+        <label class="toggle" onclick="event.stopPropagation()">
+          <input type="checkbox" id="wait1_toggle" onchange="toggleWait(1)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="wait-fields" id="wait1_fields">
+        <div class="row-2">
+          <div class="field">
+            <label>Wait Start (S)</label>
+            <input type="time" id="w1_start">
+          </div>
+          <div class="field">
+            <label>Wait Finish (F)</label>
+            <input type="time" id="w1_finish">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 Load 2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="tag">04</span>
+      <h2>Load 2</h2>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>Farm <span class="req">*</span></label>
+        <select id="farm2">
+          <option value="">— Select farm —</option>
+          <option>Agright</option>
+          <option>Angry</option>
+          <option>Brialei</option>
+          <option>Channel</option>
+          <option>Fairview</option>
+          <option>Far</option>
+          <option>Foott South</option>
+          <option>Ford</option>
+          <option>GV1 Joyces Creek</option>
+          <option>GV2 Grandview</option>
+          <option>Gleeson</option>
+          <option>Hydor</option>
+          <option>Lakeside</option>
+          <option>Lesmis</option>
+          <option>Lynian</option>
+          <option>MacKenzie</option>
+          <option>Madick</option>
+          <option>Mannes</option>
+          <option>McDonald</option>
+          <option>Osborne 1</option>
+          <option>Osborne 2</option>
+          <option>Osborne 3</option>
+          <option>Pavilion 10</option>
+          <option>Pavilion 7</option>
+          <option>Pavilion 8</option>
+          <option>Pavilion 9</option>
+          <option>Pyramid</option>
+          <option>Riverside</option>
+          <option>Sanlea</option>
+          <option>Scott</option>
+          <option>Stockdale</option>
+          <option>T-Farm</option>
+          <option>Zanelli</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="row-3">
+        <div class="field">
+          <label>Arrival (A) <span class="req">*</span></label>
+          <input type="time" id="l2_arrive">
+        </div>
+        <div class="field">
+          <label>Start Loading (S) <span class="req">*</span></label>
+          <input type="time" id="l2_start">
+        </div>
+        <div class="field">
+          <label>Finish Loading (F) <span class="req">*</span></label>
+          <input type="time" id="l2_finish">
+        </div>
+      </div>
+
+      <!-- Off-Kill Wait after Load 2 -->
+      <div class="wait-toggle" onclick="toggleWait(2)">
+        <div>
+          <div class="wait-toggle-label">⏳ Off-Kill Wait</div>
+          <div class="wait-toggle-sub">After Load 2 — waiting at plant for empty crates</div>
+        </div>
+        <label class="toggle" onclick="event.stopPropagation()">
+          <input type="checkbox" id="wait2_toggle" onchange="toggleWait(2)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="wait-fields" id="wait2_fields">
+        <div class="row-2">
+          <div class="field">
+            <label>Wait Start (S)</label>
+            <input type="time" id="w2_start">
+          </div>
+          <div class="field">
+            <label>Wait Finish (F)</label>
+            <input type="time" id="w2_finish">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 Load 3 (Optional) -->
+  <div id="load3_hidden">
+    <button class="add-load-btn" onclick="showLoad3()">+ Add Load 3 (if applicable)</button>
+  </div>
+
+  <div class="section" id="load3_section" style="display:none;">
+    <div class="section-header">
+      <span class="tag">05</span>
+      <h2>Load 3 <span style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0">(Optional)</span></h2>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>Farm</label>
+        <select id="farm3">
+          <option value="">— Select farm —</option>
+          <option>Agright</option>
+          <option>Angry</option>
+          <option>Brialei</option>
+          <option>Channel</option>
+          <option>Fairview</option>
+          <option>Far</option>
+          <option>Foott South</option>
+          <option>Ford</option>
+          <option>GV1 Joyces Creek</option>
+          <option>GV2 Grandview</option>
+          <option>Gleeson</option>
+          <option>Hydor</option>
+          <option>Lakeside</option>
+          <option>Lesmis</option>
+          <option>Lynian</option>
+          <option>MacKenzie</option>
+          <option>Madick</option>
+          <option>Mannes</option>
+          <option>McDonald</option>
+          <option>Osborne 1</option>
+          <option>Osborne 2</option>
+          <option>Osborne 3</option>
+          <option>Pavilion 10</option>
+          <option>Pavilion 7</option>
+          <option>Pavilion 8</option>
+          <option>Pavilion 9</option>
+          <option>Pyramid</option>
+          <option>Riverside</option>
+          <option>Sanlea</option>
+          <option>Scott</option>
+          <option>Stockdale</option>
+          <option>T-Farm</option>
+          <option>Zanelli</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="row-3">
+        <div class="field">
+          <label>Arrival (A)</label>
+          <input type="time" id="l3_arrive">
+        </div>
+        <div class="field">
+          <label>Start Loading (S)</label>
+          <input type="time" id="l3_start">
+        </div>
+        <div class="field">
+          <label>Finish Loading (F)</label>
+          <input type="time" id="l3_finish">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 Notes -->
+  <div class="section">
+    <div class="section-header">
+      <span class="tag">06</span>
+      <h2>Notes</h2>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>Any issues, delays or comments</label>
+        <textarea id="notes" placeholder="Road conditions, equipment issues, delays, anything worth noting..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <button class="submit-btn" onclick="reviewSheet()">Review &amp; Submit</button>
+
+</div>
+
+<!-- Success -->
+<div class="container">
+  <div class="success-screen" id="successScreen">
+    <div class="tick">✅</div>
+    <h2>Shift Submitted</h2>
+    <p>Good work today — get some rest.</p>
+    <button class="new-btn" onclick="resetForm()">New Shift Report</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Confirm &amp; Submit</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="previewBody"></div>
+    <div class="modal-footer">
+      <button style="background:var(--panel);color:var(--text);border:1px solid var(--border);padding:12px;border-radius:5px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;flex:1;" onclick="closeModal()">← Back</button>
+      <button style="background:var(--accent);color:#fff;border:none;padding:12px;border-radius:5px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;flex:1;" onclick="submitSheet()">Confirm Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const checks = { oil: null, coolant: null, lights: null, tyres: null, airlines: null, turntable: null };
+
+  function setCheck(btn, item, val) {
+    checks[item] = val;
+    const parent = btn.closest('.yes-no');
+    parent.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+
+  
+  const SETTINGS_URL = 'https://raw.githubusercontent.com/southfile630/workshop-forms/main/settings.json';
+
+  async function loadSettings() {
+    try {
+      const res = await fetch(SETTINGS_URL);
+      return await res.json();
+    } catch(e) {
+      console.warn('Settings load failed:', e);
+      return null;
+    }
+  }
+
+  function populateSelect(id, items) {
+    const el = document.getElementById(id);
+    if (!el || !items) return;
+    const current = el.value;
+    el.innerHTML = '<option value="">— Select —</option>';
+    items.forEach(item => {
+      const opt = document.createElement('option');
+      opt.value = item; opt.textContent = item;
+      el.appendChild(opt);
+    });
+    if (current) el.value = current;
+  }
+);
+  };
+
+  // ── Shift hours calc ─────────────────────────────────────────
+  function diffMins(t1, t2) {
+    if (!t1 || !t2) return null;
+    const [h1,m1] = t1.split(':').map(Number);
+    const [h2,m2] = t2.split(':').map(Number);
+    let d = (h2*60+m2) - (h1*60+m1);
+    if (d < 0) d += 1440;
+    return d;
+  }
+
+  function minsToHrs(m) {
+    if (!m || m <= 0) return null;
+    return Math.round(m / 6) / 10;
+  }
+
+  function calcShift() {
+    const s = document.getElementById('shiftStart').value;
+    const f = document.getElementById('shiftFinish').value;
+    const mins = diffMins(s, f);
+    const val = minsToHrs(mins);
+    document.getElementById('shiftTotal').textContent = val ? val + ' hrs' : '— hrs';
+  }
+
+  // ── Wait time toggles ────────────────────────────────────────
+  function toggleWait(n) {
+    const cb = document.getElementById('wait' + n + '_toggle');
+    const fields = document.getElementById('wait' + n + '_fields');
+    fields.classList.toggle('show', cb.checked);
+  }
+
+  // ── Load 3 ───────────────────────────────────────────────────
+  function showLoad3() {
+    document.getElementById('load3_hidden').style.display = 'none';
+    document.getElementById('load3_section').style.display = 'block';
+  }
+
+  // ── Validate ─────────────────────────────────────────────────
+  function validate() {
+    let ok = true;
+    const req = ['shiftDate','driverName','shiftStart','shiftFinish','farm1','l1_arrive','l1_start','l1_finish','farm2','l2_arrive','l2_start','l2_finish'];
+    req.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.classList.add('invalid'); ok = false; }
+      else el.classList.remove('invalid');
+    });
+    return ok;
+  }
+
+  // ── Form data ────────────────────────────────────────────────
+  function getFormData() {
+    const load3visible = document.getElementById('load3_section').style.display !== 'none';
+    const w1 = document.getElementById('wait1_toggle').checked;
+    const w2 = document.getElementById('wait2_toggle').checked;
+
+    return {
+      preStart: {
+        oil: checks.oil,
+        coolant: checks.coolant,
+        lights: checks.lights,
+        tyres: checks.tyres,
+        airlines: checks.airlines,
+        turntable: checks.turntable,
+        notes: document.getElementById('preStartNotes').value.trim(),
+      },
+      date: document.getElementById('shiftDate').value,
+      driver: document.getElementById('driverName').value,
+      shiftStart: document.getElementById('shiftStart').value,
+      shiftFinish: document.getElementById('shiftFinish').value,
+      shiftHours: document.getElementById('shiftTotal').textContent,
+      load1: {
+        farm: document.getElementById('farm1').value,
+        arrive: document.getElementById('l1_arrive').value,
+        start: document.getElementById('l1_start').value,
+        finish: document.getElementById('l1_finish').value,
+      },
+      wait0: document.getElementById('wait0_toggle').checked ? {
+        start: document.getElementById('w0_start').value,
+        finish: document.getElementById('w0_finish').value,
+      } : null,
+      wait1: w1 ? {
+        start: document.getElementById('w1_start').value,
+        finish: document.getElementById('w1_finish').value,
+      } : null,
+      load2: {
+        farm: document.getElementById('farm2').value,
+        arrive: document.getElementById('l2_arrive').value,
+        start: document.getElementById('l2_start').value,
+        finish: document.getElementById('l2_finish').value,
+      },
+      wait2: w2 ? {
+        start: document.getElementById('w2_start').value,
+        finish: document.getElementById('w2_finish').value,
+      } : null,
+      load3: load3visible ? {
+        farm: document.getElementById('farm3').value,
+        arrive: document.getElementById('l3_arrive').value,
+        start: document.getElementById('l3_start').value,
+        finish: document.getElementById('l3_finish').value,
+      } : null,
+      notes: document.getElementById('notes').value.trim(),
+    };
+  }
+
+  // ── Review ───────────────────────────────────────────────────
+  function reviewSheet() {
+    if (!validate()) {
+      const btn = document.querySelector('.submit-btn');
+      btn.textContent = 'Fix highlighted fields ↑';
+      setTimeout(() => btn.textContent = 'Review & Submit', 2000);
+      return;
+    }
+    const d = getFormData();
+    const row = (k,v) => v ? `<div class="preview-row"><div class="preview-key">${k}</div><div class="preview-val">${v}</div></div>` : '';
+    let html = '';
+    html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">Pre-Start Check</div>`;
+    const ps = d.preStart;
+    const checkRow = (label, val) => {
+      const colour = val === 'yes' ? '#4caf50' : val === 'no' ? '#e53935' : '#888';
+      const txt = val ? val.toUpperCase() : 'NOT SET';
+      return `<div class="preview-row"><div class="preview-key">${label}</div><div class="preview-val" style="color:${colour};font-weight:600">${txt}</div></div>`;
+    };
+    html += checkRow('Engine Oil', ps.oil);
+    html += checkRow('Coolant', ps.coolant);
+    html += checkRow('Lights', ps.lights);
+    html += checkRow('Tyres', ps.tyres);
+    html += checkRow('Air Lines', ps.airlines);
+    html += checkRow('Turntable Jaws', ps.turntable);
+    if (ps.notes) html += row('Pre-Start Notes', ps.notes);
+    html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">Shift</div>`;
+    html += row('Date', d.date);
+    html += row('Driver', d.driver);
+    html += row('Shift Start', d.shiftStart);
+    html += row('Shift Finish', d.shiftFinish);
+    html += row('Total Hours', d.shiftHours);
+    if (d.wait0) {
+      html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber)">Off-Kill Wait — Before Load 1</div>`;
+      html += row('Wait Start', d.wait0.start);
+      html += row('Wait Finish', d.wait0.finish);
+    }
+    html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">Load 1</div>`;
+    html += row('Farm', d.load1.farm);
+    html += row('Arrival', d.load1.arrive);
+    html += row('Start Loading', d.load1.start);
+    html += row('Finish Loading', d.load1.finish);
+    if (d.wait1) {
+      html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber)">Off-Kill Wait — After Load 1</div>`;
+      html += row('Wait Start', d.wait1.start);
+      html += row('Wait Finish', d.wait1.finish);
+    }
+    html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">Load 2</div>`;
+    html += row('Farm', d.load2.farm);
+    html += row('Arrival', d.load2.arrive);
+    html += row('Start Loading', d.load2.start);
+    html += row('Finish Loading', d.load2.finish);
+    if (d.wait2) {
+      html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber)">Off-Kill Wait — After Load 2</div>`;
+      html += row('Wait Start', d.wait2.start);
+      html += row('Wait Finish', d.wait2.finish);
+    }
+    if (d.load3) {
+      html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">Load 3</div>`;
+      html += row('Farm', d.load3.farm || '—');
+      html += row('Arrival', d.load3.arrive || '—');
+      html += row('Start Loading', d.load3.start || '—');
+      html += row('Finish Loading', d.load3.finish || '—');
+    }
+    if (d.notes) html += row('Notes', d.notes);
+    document.getElementById('previewBody').innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+  function submitSheet() {
+    closeModal();
+    const data = getFormData();
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyW2_Lav2baCUB-z0GBjYFwihjb8uVK1qToIt7EdLEsU7qHKmZVIAQQlyb9R9XeoDfxFQ/exec';
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(err => console.error('Submission error:', err));
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+  }
+
+  function resetForm() {
+    document.getElementById('successScreen').classList.remove('show');
+    document.getElementById('formContainer').style.display = 'block';
+    document.getElementById('shiftDate').value = new Date().toISOString().split('T')[0];
+    ['driverName','shiftStart','shiftFinish','farm1','l1_arrive','l1_start','l1_finish',
+     'farm2','l2_arrive','l2_start','l2_finish','farm3','l3_arrive','l3_start','l3_finish',
+     'w0_start','w0_finish','w1_start','w1_finish','w2_start','w2_finish','notes'].forEach(id => {
+      const el = document.getElementById(id); if(el) el.value = '';
+    });
+    document.getElementById('shiftTotal').textContent = '— hrs';
+    Object.keys(checks).forEach(k => checks[k] = null);
+    document.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('preStartNotes').value = '';
+    document.getElementById('wait0_toggle').checked = false;
+    document.getElementById('wait1_toggle').checked = false;
+    document.getElementById('wait2_toggle').checked = false;
+    document.getElementById('wait0_fields').classList.remove('show');
+    document.getElementById('wait1_fields').classList.remove('show');
+    document.getElementById('wait2_fields').classList.remove('show');
+    document.getElementById('load3_hidden').style.display = 'block';
+    document.getElementById('load3_section').style.display = 'none';
+  }
+</script>
+
+
+</body></html>
