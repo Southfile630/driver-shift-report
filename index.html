@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0057)file:///C:/Users/Steve/Downloads/driver_shift_report.html -->
+<!-- saved from url=(0063)file:///C:/Users/Steve/Downloads/driver_shift_report%20(1).html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -542,43 +542,43 @@
       <div class="check-item">
         <span class="check-label">🛢️ Engine Oil</span>
         <div class="yes-no">
-          <button class="yn-btn yes" onclick="setCheck(this,&#39;oil&#39;,&#39;yes&#39;)">Yes</button>
-          <button class="yn-btn no" onclick="setCheck(this,&#39;oil&#39;,&#39;no&#39;)">No</button>
+          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;oil&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;oil&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
       <div class="check-item">
         <span class="check-label">🌡️ Coolant</span>
         <div class="yes-no">
-          <button class="yn-btn yes" onclick="setCheck(this,&#39;coolant&#39;,&#39;yes&#39;)">Yes</button>
-          <button class="yn-btn no" onclick="setCheck(this,&#39;coolant&#39;,&#39;no&#39;)">No</button>
+          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;coolant&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;coolant&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
       <div class="check-item">
         <span class="check-label">💡 Lights</span>
         <div class="yes-no">
-          <button class="yn-btn yes" onclick="setCheck(this,&#39;lights&#39;,&#39;yes&#39;)">Yes</button>
-          <button class="yn-btn no" onclick="setCheck(this,&#39;lights&#39;,&#39;no&#39;)">No</button>
+          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;lights&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;lights&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
       <div class="check-item">
         <span class="check-label">🔵 Tyres</span>
         <div class="yes-no">
-          <button class="yn-btn yes" onclick="setCheck(this,&#39;tyres&#39;,&#39;yes&#39;)">Yes</button>
-          <button class="yn-btn no" onclick="setCheck(this,&#39;tyres&#39;,&#39;no&#39;)">No</button>
+          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;tyres&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;tyres&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
       <div class="check-item">
         <span class="check-label">🔗 Air Line Connections</span>
         <div class="yes-no">
-          <button class="yn-btn yes" onclick="setCheck(this,&#39;airlines&#39;,&#39;yes&#39;)">Yes</button>
-          <button class="yn-btn no" onclick="setCheck(this,&#39;airlines&#39;,&#39;no&#39;)">No</button>
+          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;airlines&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;airlines&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
       <div class="check-item">
         <span class="check-label">🔄 Turntable Jaws</span>
         <div class="yes-no">
-          <button class="yn-btn yes" onclick="setCheck(this,&#39;turntable&#39;,&#39;yes&#39;)">Yes</button>
-          <button class="yn-btn no" onclick="setCheck(this,&#39;turntable&#39;,&#39;no&#39;)">No</button>
+          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;turntable&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;turntable&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
 
@@ -966,12 +966,7 @@
     parent.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
-
-
-  
-  const SETTINGS_URL = 'https://raw.githubusercontent.com/southfile630/workshop-forms/main/settings.json';
-
-  async function loadSettings() {
+async function loadSettings() {
     try {
       const res = await fetch(SETTINGS_URL);
       return await res.json();
