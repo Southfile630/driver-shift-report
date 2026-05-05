@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/Steve/Downloads/driver_shift_report%20(2).html -->
+<!-- saved from url=(0063)file:///C:/Users/Steve/Downloads/driver_shift_report%20(6).html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -577,7 +577,7 @@
       <div class="check-item">
         <span class="check-label">🔄 Turntable Jaws</span>
         <div class="yes-no">
-          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;turntable&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn yes active" onclick="setCheck(this,&#39;turntable&#39;,&#39;yes&#39;)">Yes</button>
           <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;turntable&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
@@ -966,29 +966,9 @@
     parent.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
-async function loadSettings() {
-    try {
-      const res = await fetch(SETTINGS_URL);
-      return await res.json();
-    } catch(e) {
-      console.warn('Settings load failed:', e);
-      return null;
-    }
-  }
 
-  function populateSelect(id, items) {
-    const el = document.getElementById(id);
-    if (!el || !items) return;
-    const current = el.value;
-    el.innerHTML = '<option value="">— Select —</option>';
-    items.forEach(item => {
-      const opt = document.createElement('option');
-      opt.value = item; opt.textContent = item;
-      el.appendChild(opt);
-    });
-    if (current) el.value = current;
-  }
-);
+  window.onload = () => {
+    document.getElementById('shiftDate').value = new Date().toISOString().split('T')[0];
   };
 
   // ── Shift hours calc ─────────────────────────────────────────
