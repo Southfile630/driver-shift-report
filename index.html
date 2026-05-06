@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/Steve/Downloads/driver_shift_report%20(6).html -->
+<!-- saved from url=(0063)file:///C:/Users/Steve/Downloads/driver_shift_report%20(8).html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -577,7 +577,7 @@
       <div class="check-item">
         <span class="check-label">🔄 Turntable Jaws</span>
         <div class="yes-no">
-          <button type="button" class="yn-btn yes active" onclick="setCheck(this,&#39;turntable&#39;,&#39;yes&#39;)">Yes</button>
+          <button type="button" class="yn-btn yes" onclick="setCheck(this,&#39;turntable&#39;,&#39;yes&#39;)">Yes</button>
           <button type="button" class="yn-btn no" onclick="setCheck(this,&#39;turntable&#39;,&#39;no&#39;)">No</button>
         </div>
       </div>
@@ -1148,11 +1148,12 @@
     closeModal();
     const data = getFormData();
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyW2_Lav2baCUB-z0GBjYFwihjb8uVK1qToIt7EdLEsU7qHKmZVIAQQlyb9R9XeoDfxFQ/exec';
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(data));
     fetch(SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: formData
     }).catch(err => console.error('Submission error:', err));
     document.getElementById('formContainer').style.display = 'none';
     document.getElementById('successScreen').classList.add('show');
