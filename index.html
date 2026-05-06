@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/Steve/Downloads/driver_shift_report%20(8).html -->
+<!-- saved from url=(0063)file:///C:/Users/Steve/Downloads/driver_shift_report%20(9).html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -758,15 +758,20 @@
     </div>
   </div>
 
+  <!-- Load 2 toggle button -->
+  <div id="load2_hidden">
+    <button class="add-load-btn" onclick="showLoad2()">+ Add Load 2 (if applicable)</button>
+  </div>
+
   <!-- 03 Load 2 -->
-  <div class="section">
+  <div class="section" id="load2_section" style="display:none;">
     <div class="section-header">
       <span class="tag">04</span>
-      <h2>Load 2</h2>
+      <h2>Load 2 <span style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0">(Optional)</span></h2>
     </div>
     <div class="section-body">
       <div class="field">
-        <label>Farm <span class="req">*</span></label>
+        <label>Farm</label>
         <select id="farm2">
           <option value="">— Select farm —</option>
           <option>Agright</option>
@@ -807,15 +812,15 @@
       </div>
       <div class="row-3">
         <div class="field">
-          <label>Arrival (A) <span class="req">*</span></label>
+          <label>Arrival (A)</label>
           <input type="time" id="l2_arrive">
         </div>
         <div class="field">
-          <label>Start Loading (S) <span class="req">*</span></label>
+          <label>Start Loading (S)</label>
           <input type="time" id="l2_start">
         </div>
         <div class="field">
-          <label>Finish Loading (F) <span class="req">*</span></label>
+          <label>Finish Loading (F)</label>
           <input type="time" id="l2_finish">
         </div>
       </div>
@@ -1002,6 +1007,11 @@
   }
 
   // ── Load 3 ───────────────────────────────────────────────────
+  function showLoad2() {
+    document.getElementById('load2_hidden').style.display = 'none';
+    document.getElementById('load2_section').style.display = 'block';
+  }
+
   function showLoad3() {
     document.getElementById('load3_hidden').style.display = 'none';
     document.getElementById('load3_section').style.display = 'block';
@@ -1010,7 +1020,7 @@
   // ── Validate ─────────────────────────────────────────────────
   function validate() {
     let ok = true;
-    const req = ['shiftDate','driverName','shiftStart','shiftFinish','farm1','l1_arrive','l1_start','l1_finish','farm2','l2_arrive','l2_start','l2_finish'];
+    const req = ['shiftDate','driverName','shiftStart','shiftFinish','farm1','l1_arrive','l1_start','l1_finish'];
     req.forEach(id => {
       const el = document.getElementById(id);
       if (!el.value.trim()) { el.classList.add('invalid'); ok = false; }
@@ -1054,12 +1064,12 @@
         start: document.getElementById('w1_start').value,
         finish: document.getElementById('w1_finish').value,
       } : null,
-      load2: {
+      load2: document.getElementById('load2_section').style.display !== 'none' ? {
         farm: document.getElementById('farm2').value,
         arrive: document.getElementById('l2_arrive').value,
         start: document.getElementById('l2_start').value,
         finish: document.getElementById('l2_finish').value,
-      },
+      } : null,
       wait2: w2 ? {
         start: document.getElementById('w2_start').value,
         finish: document.getElementById('w2_finish').value,
@@ -1120,11 +1130,13 @@
       html += row('Wait Start', d.wait1.start);
       html += row('Wait Finish', d.wait1.finish);
     }
-    html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">Load 2</div>`;
-    html += row('Farm', d.load2.farm);
-    html += row('Arrival', d.load2.arrive);
-    html += row('Start Loading', d.load2.start);
-    html += row('Finish Loading', d.load2.finish);
+    if (d.load2) {
+      html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">Load 2</div>`;
+      html += row('Farm', d.load2.farm || '—');
+      html += row('Arrival', d.load2.arrive || '—');
+      html += row('Start Loading', d.load2.start || '—');
+      html += row('Finish Loading', d.load2.finish || '—');
+    }
     if (d.wait2) {
       html += `<div style="margin:12px 0;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber)">Off-Kill Wait — After Load 2</div>`;
       html += row('Wait Start', d.wait2.start);
@@ -1178,6 +1190,8 @@
     document.getElementById('wait0_fields').classList.remove('show');
     document.getElementById('wait1_fields').classList.remove('show');
     document.getElementById('wait2_fields').classList.remove('show');
+    document.getElementById('load2_hidden').style.display = 'block';
+    document.getElementById('load2_section').style.display = 'none';
     document.getElementById('load3_hidden').style.display = 'block';
     document.getElementById('load3_section').style.display = 'none';
   }
